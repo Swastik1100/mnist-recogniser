@@ -1,6 +1,5 @@
 import base64
 from io import BytesIO
-from pathlib import Path
 
 import joblib
 import os
@@ -12,13 +11,17 @@ from PIL import Image
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(BASE_DIR, 'model.joblib')
 
-# Load the model cleanly
-model = joblib.load(model_path)
-
-
-
 app = Flask(__name__, static_folder=".")
-model = joblib.load(MODEL_PATH)
+model = None
+
+
+def get_model():
+    global model
+    if model is None:
+        if not os.path.exists(model_path):
+            raise FileNotFoundError(f"Model file not found at {model_path}")
+        model = joblib.load(model_path)
+    return model
 
 
 def preprocess_image(image_data: str) -> np.ndarray:
@@ -44,8 +47,11 @@ def predict():
         return jsonify({"error": "Missing image"}), 400
 
     try:
+        loaded_model = get_model()
         features = preprocess_image(image_data)
-        prediction = int(model.predict(features)[0])
+        prediction = int(loaded_model.predict(features)[0])
+    except FileNotFoundError:
+        return jsonify({"error": "Model file missing. Train with `python train.py` and redeploy."}), 500
     except Exception:
         return jsonify({"error": "Invalid image data"}), 400
 
