@@ -1,29 +1,16 @@
-# mnist-recogniser
+#  MNIST Recogniser
 
-A full-stack MNIST digit recognizer with a drawing canvas UI, Flask backend, and a classic scikit-learn model.
+Let’s be completely real for a second, I built this out of pure boredom. This entire full-stack application was forged by the prompts of AI generation. The task i did most was commiting.[idk when in irl :(  ]
 
-## Setup
+This is a web app where you draw a number (0-9) on a digital canvas, and a classic Machine Learning model tries to guess what you wrote. 
 
-```bash
-python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\\Scripts\\activate
-pip install -r requirements.txt
-```
 
-## Train model
 
-```bash
-python train.py
-```
+##  Tech Stack
+* Python
+* Scikit-learn & Joblib
+* Flask / FastAPI
+* HTML5 Canvas & JavaScript
+* Prompt Engineering 
 
-This creates `model.joblib` in the project root.
-
-If `model.joblib` is missing in deployment, the backend now auto-trains a small fallback model using scikit-learn's built-in digits dataset so predictions still work.
-
-## Run app
-
-```bash
-python app.py
-```
-
-Open `http://127.0.0.1:5000` in your browser, draw one digit (0-9), and click **Predict**.
+The link to website: https://mnist-recogniser.vercel.app/
