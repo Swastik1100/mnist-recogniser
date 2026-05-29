@@ -39,11 +39,11 @@ def predict():
     try:
         features = preprocess_image(image_data)
         prediction = int(model.predict(features)[0])
-    except Exception as exc:
-        return jsonify({"error": f"Invalid image data: {exc}"}), 400
+    except Exception:
+        return jsonify({"error": "Invalid image data"}), 400
 
     return jsonify({"prediction": prediction})
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
