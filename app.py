@@ -3,12 +3,19 @@ from io import BytesIO
 from pathlib import Path
 
 import joblib
+import os
 import numpy as np
 from flask import Flask, jsonify, request, send_from_directory
 from PIL import Image
 
-BASE_DIR = Path(__file__).resolve().parent
-MODEL_PATH = BASE_DIR / "model.joblib"
+# Get the absolute path of the directory where app.py is located
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(BASE_DIR, 'model.joblib')
+
+# Load the model cleanly
+model = joblib.load(model_path)
+
+
 
 app = Flask(__name__, static_folder=".")
 model = joblib.load(MODEL_PATH)
