@@ -18,6 +18,8 @@ python train.py
 
 This creates `model.joblib` in the project root.
 
+If `model.joblib` is missing in deployment, the backend now auto-trains a small fallback model using scikit-learn's built-in digits dataset so predictions still work.
+
 ## Run app
 
 ```bash
